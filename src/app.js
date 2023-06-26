@@ -5,6 +5,7 @@ import { greeting, sayGoodbye } from "./utils.js";
 import { cd, up, ls } from "./commands/navigation.js";
 import { commonOs } from "./commands/os.js";
 import { hash } from "./commands/hash.js";
+import { compress, decompress } from "./commands/zip.js";
 
 
 export class App {
@@ -57,6 +58,15 @@ export class App {
         case command === 'hash' && commandList.length === 2:
           this.createAbsolutePath(firstArg)
           hash(this.absPath);
+          break;
+
+        case command === 'compress' && commandList.length === 3:
+          this.createAbsolutePath(firstArg)
+          await compress(this.absPath, secondArg);
+          break;
+        case command === 'decompress' && commandList.length === 3:
+          this.createAbsolutePath(firstArg)
+          await decompress(this.absPath, secondArg);
           break;
 
         default:
