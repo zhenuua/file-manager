@@ -3,6 +3,7 @@ import process from "process";
 import { isAbsolute, resolve } from "path";
 import { greeting, sayGoodbye } from "./utils.js";
 import { cd, up, ls } from "./commands/navigation.js";
+import { commonOs } from "./commands/os.js";
 
 
 export class App {
@@ -28,6 +29,9 @@ export class App {
       const firstArg = commandList[1];
       const secondArg = commandList[2];
       switch (true) {
+        case '.exit':
+          process.exit();
+
         case command === 'cd' && commandList.length === 2:
           this.createAbsolutePath(firstArg)
           const newCdPath = cd(this.absPath);
@@ -45,8 +49,9 @@ export class App {
           ls(this.currentPath)
           break;
 
-        case '.exit':
-          process.exit();
+        case command === 'os' && commandList.length === 2:
+          commonOs(firstArg);
+          break;
 
         default:
           console.log("The command doesn't exist");
