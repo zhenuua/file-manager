@@ -4,6 +4,7 @@ import { isAbsolute, resolve } from "path";
 import { greeting, sayGoodbye } from "./utils.js";
 import { cd, up, ls } from "./commands/navigation.js";
 import { commonOs } from "./commands/os.js";
+import { hash } from "./commands/hash.js";
 
 
 export class App {
@@ -51,6 +52,11 @@ export class App {
 
         case command === 'os' && commandList.length === 2:
           commonOs(firstArg);
+          break;
+
+        case command === 'hash' && commandList.length === 2:
+          this.createAbsolutePath(firstArg)
+          hash(this.absPath);
           break;
 
         default:
