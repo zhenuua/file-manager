@@ -1,6 +1,4 @@
-import process from "process";
-import { greeting, sayGoodbye } from "./utils.js";
+import { App } from "./app.js";
 
-
-greeting();
-process.on('exit', () => sayGoodbye());
+const app = new App();
+await app.start();
