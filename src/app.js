@@ -1,11 +1,12 @@
-import readline from "readline";
-import process from "process";
-import { isAbsolute, resolve } from "path";
-import { greeting, sayGoodbye } from "./utils.js";
-import { cd, up, ls } from "./commands/navigation.js";
-import { commonOs } from "./commands/os.js";
-import { hash } from "./commands/hash.js";
-import { compress, decompress } from "./commands/zip.js";
+import readline from 'readline';
+import process from 'process';
+import { isAbsolute, resolve } from 'path';
+import { greeting, sayGoodbye } from './utils.js';
+import { cd, up, ls } from './commands/navigation.js';
+import { commonOs } from './commands/os.js';
+import { hash } from './commands/hash.js';
+import { compress, decompress } from './commands/zip.js';
+import { mv, cp, rm, rn, add, cat } from './commands/fs.js';
 
 
 export class App {
@@ -25,7 +26,7 @@ export class App {
       output: process.stdout,
     });
 
-    rl.on("line", async (input) => {
+    rl.on('line', async (input) => {
       const commandList = input.split(' ');
       const command = commandList[0];
       const firstArg = commandList[1];
@@ -64,9 +65,40 @@ export class App {
           this.createAbsolutePath(firstArg)
           await compress(this.absPath, secondArg);
           break;
+
         case command === 'decompress' && commandList.length === 3:
           this.createAbsolutePath(firstArg)
           await decompress(this.absPath, secondArg);
+          break;
+
+        case command === 'cat' && commandList.length === 2:
+          this.createAbsolutePath(firstArg);
+          cat(this.absPath);
+          break;
+
+        case command === 'add' && commandList.length === 2:
+          this.createAbsolutePath(firstArg);
+          add(this.absPath);
+          break;
+
+        case command === 'rn' && commandList.length === 3:
+          this.createAbsolutePath(firstArg);
+          rn(this.absPath, secondArg);
+          break;
+
+        case command === 'cp' && commandList.length === 3:
+          this.createAbsolutePath(firstArg);
+          cp(this.absPath, secondArg);
+          break;
+
+        case command === 'mv' && commandList.length === 3:
+          this.createAbsolutePath(firstArg);
+          mv(this.absPath, secondArg);
+          break;
+
+        case command === 'rm' && commandList.length === 2:
+          this.createAbsolutePath(firstArg);
+          rm(this.absPath);
           break;
 
         default:
